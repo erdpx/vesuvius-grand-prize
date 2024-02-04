@@ -37,7 +37,9 @@ Now, inside the ```config.py``` file, we must change the PATH for the segments' 
   {segment_id}_mask.png
 ```
 
-It must be the same ```segment_id``` as appears in the ```segments_config.py```, where you choose the training and inferring segments. Checkpoint files are also changed in this file by changing its path and setting ```'load_checkpoint': True```. Then it can run with
+It must be the same ```segment_id``` as appears in the ```segments_config.py```, where you choose the training and inferring segments. Checkpoint files are also changed in this file by changing its path and setting ```'load_checkpoint': True```. You can download our [available checkpoints here](https://drive.google.com/drive/folders/16UhqiqCy3dwoWAHR0g75D_oYFh8z3SBI).
+
+Finally, run it with:
 ```
 python vesuvs.py
 ```
