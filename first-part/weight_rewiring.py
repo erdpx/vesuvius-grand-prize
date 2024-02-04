@@ -2,14 +2,18 @@
 """ Improving Deep Neural Network Random Initialization Through Neuronal Rewiring (2022)
 https://github.com/scabini/PArewiring_weights
 
-https://arxiv.org/abs/2207.08148
+Code for the Preferential Attachment Rewiring (PARw) method for neural network initialization.
 
+
+https://arxiv.org/abs/2207.08148
 @article{scabini2022improving,
   title={Improving Deep Neural Network Random Initialization Through Neuronal Rewiring},
   author={Scabini, Leonardo and De Baets, Bernard and Bruno, Odemir M},
   journal={arXiv preprint arXiv:2207.08148},
   year={2022}
 }
+
+Credits to: Leonardo Scabini, Bernard De Baets, and Odemir Bruno
 """
 
 import torch
@@ -97,7 +101,7 @@ def stabilize_strength(initializer, weights, K=100): #how much stable? =) increa
     input_neurons = weights.numel() // output_neurons  
     weights_out = torch.empty(dimensions)
     for i in range(K): 
-        initializer(weights)                              
+        initializer(weights) #During this, pytorch should NOT be configured for deterministic/reproducible behavior (torch.manual_seed)                             
         weights = weights.reshape((output_neurons, input_neurons))
         localmax = torch.mean(torch.hstack((torch.var(torch.sum(weights, dim=0) ), torch.var(torch.sum(weights, dim=1) ))))     
         if localmax < maximus:
@@ -111,7 +115,7 @@ def stabilize_strength(initializer, weights, K=100): #how much stable? =) increa
     return weights
 
 ### HOW TO USE:
-# eg. rewiring all layers of a conv2d model:
+# eg. rewiring the main layers of a conv2d model:
 
 # for m in model.modules():
 #     if isinstance(m, torch.nn.Conv2d) or isinstance(m, torch.nn.Linear):
